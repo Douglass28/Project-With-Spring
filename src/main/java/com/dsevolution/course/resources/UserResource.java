@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.persistence.PostUpdate;
 import java.net.URI;
 import java.util.List;
 
@@ -40,6 +41,12 @@ public class UserResource {
     public ResponseEntity<Void> delete(@PathVariable Integer id){
         userService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody User obj){
+        obj = userService.upDate(id, obj);
+        return ResponseEntity.ok().body(obj);
     }
 
 }
