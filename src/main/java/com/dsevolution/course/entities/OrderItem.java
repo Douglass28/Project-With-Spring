@@ -1,18 +1,20 @@
 package com.dsevolution.course.entities;
 
 import com.dsevolution.course.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_order_item")
-public class OrderItem {
+public class OrderItem implements Serializable {
 
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
@@ -27,11 +29,7 @@ public class OrderItem {
         this.price = price;
 
     }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
+    @JsonIgnore
     public Order getOrder(){
         return id.getOrder();
     }
@@ -46,6 +44,10 @@ public class OrderItem {
 
     public void setProduct(Product product){
         id.setProduct(product);
+    }
+
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public void setQuantity(Integer quantity) {
